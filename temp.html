@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<head>
+    <title>Form Validation</title>
+    <script>
+        function formValidate(){
+            var name1 = document.getElementById("fname").value;
+            var name2 = document.getElementById("lname").value;
+            var email = document.getElementById("email").value;
+            var pass = document.getElementById("pwd").value;
+            var cpass = document.getElementById("cpwd").value;
+
+            if(name1==""){
+                console.log("1");
+                document.getElementById("fmsg").innerHTML="*Enter the firstname";
+                return false;
+            }
+
+            if(name2==""){
+                console.log("2");
+                document.getElementById("fmsg").innerHTML="";
+                document.getElementById("lmsg").innerHTML="*Enter the lastname";
+                return false;
+            }
+
+            if(email==""){
+                console.log("3");
+                document.getElementById("lmsg").innerHTML="";
+                document.getElementById("emsg").innerHTML="*Enter the email";
+                return false;
+            }
+
+            if(pass==""){
+                console.log("5");
+                document.getElementById("emsg").innerHTML="";
+                document.getElementById("pmsg").innerHTML="*Enter the password";
+                return false;
+            }
+
+            if(cpass==""){
+                console.log("6");
+                document.getElementById("pmsg").innerHTML="";
+                document.getElementById("cpmsg").innerHTML="*Enter the confirm password";
+                return false;
+            }
+
+            if(pass!=cpass){
+                console.log("7");
+                document.getElementById("cpmsg").innerHTML="*Passwords don't match";
+                return false;
+            }
+
+            else{
+                console.log("11");
+                alert("Form Submitted Successfully");
+                document.write("JavaScript form run successful");
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <h1 align = "center">Registration Form</h1>
+    <form onsubmit="return formValidate()">
+        <table>
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" placeholder="firstname" id="fname"></td>
+                <p id="fmsg" style="color:red"></p>
+            </tr>
+
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" placeholder="lastname" id="lname"></td>
+                <p id="lmsg" style="color:red"></p>
+            </tr>
+
+            <tr>
+                <td>Email Id:</td>
+                <td><input type="text" placeholder="email" id="email"></td>
+                <p id="emsg" style="color:red"></p>
+            </tr>
+
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" placeholder="Password" id="pwd"></td>
+                <p id="pmsg" style="color:red"></p>
+            </tr>
+
+            <tr>
+                <td>Confirm Password:</td>
+                <td><input type="password" placeholder="confirm password" id="cpwd"></td>
+                <p id="cpmsg" style="color:red"></p>
+            </tr>
+
+            <tr>
+                <td colspan="2"><input type="submit" value="submit"></td>
+            </tr>
+        </table>
+    
+    
+    
+    </form>
+</body>
+</html>

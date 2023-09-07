@@ -1,0 +1,98 @@
+<!-- HOW to change the ip address to the country name -->
+<?php
+$country = geoip_country_name_by_name('www.example.com');
+if ($country) {
+    echo 'This host is located in: ' . $country;
+}
+?>
+
+
+<!-- HOW to get the ip address of the person visiting the page -->
+<?php  
+    function getIPAddress() {  
+    //whether ip is from the share internet  
+     if(!emptyempty($_SERVER['HTTP_CLIENT_IP'])) {  
+                $ip = $_SERVER['HTTP_CLIENT_IP'];  
+        }  
+    //whether ip is from the proxy  
+    elseif (!emptyempty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+                $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+     }  
+//whether ip is from the remote address  
+    else{  
+             $ip = $_SERVER['REMOTE_ADDR'];  
+     }  
+     return $ip;  
+}  
+$ip = getIPAddress();  
+echo 'User Real IP Address - '.$ip;  
+?>  
+
+
+
+<!-- DOCS for displaying products from database and add to cart on button click -->
+
+<?php
+require "includes/db.php";
+
+if(isset($_POST['add_to_cart'])){
+    $item_id = $_GET['id'];
+    $item_name = $_POST['name'];
+    $item_price = $_POST['price'];
+    $item_quantity = $_POST['quantity'];
+
+    // $exits_query = "SELECT * FROM logins l, cart c WHERE c.emailID=l.emailID";
+    // $exits_result = mysqli_query($con, $exits_query);
+    // $exits_rows = mysqli_num_rows($exits_result);
+    // echo $exits_rows;
+    // if($exits_rows==1){
+	// 	echo "<br><center>Welcome $email. <br> Login successfull<br>";
+	// 	echo "<p><a href='index.html'>Logout</a></p>";
+        $cart_query	= "INSERT INTO `cart` (`cart_id`, `item_id`, `cart_quantity`) VALUES (NULL, '$item_id', '$item_quantity')";
+        $cart_query = mysqli_query($con, $cart_query);
+        echo "
+        <script>
+            alert('Added to cart Successfully');            
+            // document.location.href = 'index.html';
+        </script>
+        ";
+	// }
+    // else{
+	// 	echo "<h3>! USER NOT FOUND.</h3>
+	// 	<br/>Click here to <a href='login.html'>Login</a>";
+	// }		
+}
+
+$query = "SELECT * FROM product";
+$result = mysqli_query($con, $query);
+
+while($row = mysqli_fetch_array($result)) { ?>
+    <div>
+        <form action="product.php?id=<?= $row['item_id'] ?>" method="post">
+            <img src="images/<?= $row['item_image'] ?>.jpg" alt="">
+            <h5><?=$row['item_name'];?></h5>
+            <h5><?=$row['item_price'];?></h5>
+
+            <input type="hidden" name="name" value="<?= $row['item_name'] ?>">
+            <input type="hidden" name="price" value="<?= $row['item_price'] ?>">
+            <input type="number" name="quantity" value="1">
+
+            <input type="submit" name='add_to_cart' value="ADD To Cart">
+        </form>
+    </div>
+<?php } ?>
+
+<div>
+    <h2>ITEM SELECTED</h2>
+
+    <?php
+        var_dump($_SESSION['cart']);
+    ?>
+</div>
+
+
+
+
+
+
+YOUTUBE CHANNEL -> Programming with dickson
